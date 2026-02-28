@@ -1,31 +1,30 @@
 # 🚀 AI Chatbot Platform
 
-A lightweight AI-powered chatbot platform built with **Python, Flask, SQLite, Docker, and Kubernetes-ready manifests**.
+A lightweight AI-powered chatbot built using **Python, Flask, SQLite, Docker, and Kubernetes-ready manifests**.
 
-This project started as a CLI chatbot and evolved into a containerized web application with persistent storage and deployment-ready infrastructure — designed with a **server administration and DevOps mindset**.
+Originally developed as a CLI chatbot, this project evolved into a containerized web application with persistent storage and deployment-ready infrastructure — built with a **server administration and DevOps mindset**.
 
-The application currently integrates with the **Groq API**, and can be easily adapted to use **OpenAI** if required.
+The application integrates with the **Groq API** by default and can be easily adapted to use **OpenAI API**.
 
 ---
 
-## 🧠 Features
+## 🧠 Core Features
 
-- CLI-based chatbot core  
-- Flask web UI  
-- Persistent chat history (SQLite)  
-- Environment-based secret management  
-- Groq API integration  
-- Dockerized deployment  
+- CLI chatbot engine  
+- Flask-based web interface  
+- Persistent chat storage (SQLite)  
+- Secure environment-based secret management  
+- Groq API integration (OpenAI optional)  
+- Docker containerization  
 - Docker Compose support  
 - Kubernetes manifests (Deployment, Service, PVC, Secret template)  
-- Clean project structure  
-- Git-ready (no secrets committed)  
+- Clean, production-aware project structure  
 
 ---
 
 ## 📁 Project Structure
 
-
+```
 ai-chatbot/
 ├── Dockerfile
 ├── docker-compose.yml
@@ -35,26 +34,25 @@ ai-chatbot/
 ├── chat_history.db
 ├── data/
 ├── templates/
-│ └── index.html
+│   └── index.html
 ├── k8s/
-│ ├── deployment.yaml
-│ ├── service.yaml
-│ ├── pvc.yaml
-│ └── secret.example.yaml
+│   ├── deployment.yaml
+│   ├── service.yaml
+│   ├── pvc.yaml
+│   └── secret.example.yaml
 └── README.md
-
+```
 
 ---
 
 ## ⚙️ Prerequisites
 
-- Ubuntu/Linux server  
+- Ubuntu / Linux server  
 - Python 3.10+  
 - pip  
 - Docker (optional)  
 - Kubernetes (optional)  
 - Groq API key (default)  
-- OpenAI API key (optional alternative)  
 
 ---
 
@@ -62,120 +60,165 @@ ai-chatbot/
 
 Create a `.env` file in the project root:
 
-
+```
 GROQ_API_KEY=your_groq_api_key_here
-
+```
 
 If switching to OpenAI:
 
-
+```
 OPENAI_API_KEY=your_openai_api_key_here
+```
 
-
-Make sure `.env` is listed in `.gitignore`.
+Ensure `.env` is added to `.gitignore`.
 
 ---
 
-## 🖥️ Running Locally (Without Docker)
+# 🖥️ Local Setup (Without Docker)
 
-### 1️⃣ Install Dependencies
+### 1️⃣ System Setup
 
 ```bash
 sudo apt update && sudo apt upgrade -y
 sudo apt install python3 python3-pip python3-venv sqlite3 -y
-2️⃣ Clone Repository
+```
+
+### 2️⃣ Clone Repository
+
+```bash
 git clone https://github.com/Dhruvpatil56/ai-chatbot.git
 cd ai-chatbot
-3️⃣ Create Virtual Environment
+```
+
+### 3️⃣ Create Virtual Environment
+
+```bash
 python3 -m venv venv
 source venv/bin/activate
-4️⃣ Install Requirements
+```
+
+### 4️⃣ Install Dependencies
+
+```bash
 pip install -r requirements.txt
-5️⃣ Run Application
+```
+
+### 5️⃣ Run Application
+
+```bash
 python3 app.py
+```
 
-Access it at:
+Access in browser:
 
+```
 http://<server-ip>:5000
-🐳 Running with Docker
-Build Image
+```
+
+---
+
+# 🐳 Docker Deployment
+
+### Build Image
+
+```bash
 docker build -t ai-chatbot .
-Run Container
+```
+
+### Run Container
+
+```bash
 docker run -d \
   -p 5000:5000 \
   --env-file .env \
   --name ai-chatbot \
   ai-chatbot
+```
 
 Access:
 
+```
 http://<server-ip>:5000
-🐳 Using Docker Compose
+```
+
+---
+
+# 🐳 Docker Compose (Optional)
+
+```bash
 docker compose up -d --build
-☸️ Kubernetes Deployment (Optional)
-Create Secret
+```
+
+---
+
+# ☸️ Kubernetes Deployment (Optional)
+
+### Create Secret
+
+```bash
 kubectl create secret generic ai-chatbot-secret \
   --from-literal=GROQ_API_KEY=your_groq_api_key
-Apply Manifests
+```
+
+### Deploy
+
+```bash
 kubectl apply -f k8s/
+```
 
-Verify:
+### Verify
 
+```bash
 kubectl get pods
 kubectl get svc
-🗄️ Database
+```
 
-SQLite used for persistent chat history
+---
 
-chat_history.db stores conversation records
+## 🗄️ Database
 
-Suitable for lightweight/internal deployments
+- SQLite used for chat persistence  
+- `chat_history.db` stores conversation history  
+- Designed for lightweight/internal usage  
+- Can be replaced with PostgreSQL for production scaling  
 
-Can be replaced with PostgreSQL for larger-scale setups
+---
 
-🔒 Security Considerations
+## 🔒 Security Considerations
 
-API keys stored in environment variables
+- API keys stored in environment variables  
+- No secrets committed to repository  
+- Stateless container design  
+- Runtime data separated from source code  
+- Kubernetes secrets templated securely  
 
-No secrets committed to repository
+---
 
-Stateless container design
+## 📦 DevOps Practices Applied
 
-Runtime data separated from source code
+- Virtual environment isolation  
+- Dependency locking via `requirements.txt`  
+- Docker containerization  
+- Kubernetes deployment manifests  
+- Clean Git history  
+- No hardcoded credentials  
+- Infrastructure-aware architecture  
 
-Kubernetes secrets templated securely
+---
 
-📦 DevOps Practices Applied
+## 🎯 Project Evolution
 
-Virtual environment isolation
+CLI Chatbot  
+→ Flask Web UI  
+→ SQLite Persistence  
+→ Dockerized Deployment  
+→ Kubernetes-Ready Manifests  
 
-Dependency locking via requirements.txt
+Built to simulate a lightweight, production-style AI service with operational awareness.
 
-Docker containerization
+---
 
-Kubernetes deployment manifests
+## 👨‍💻 Author
 
-Clean Git history
-
-No hardcoded credentials
-
-Infrastructure-aware project structure
-
-🎯 Project Evolution
-
-Started as a CLI chatbot
-
-Extended to Flask web UI
-
-Added SQLite persistence
-
-Containerized with Docker
-
-Prepared for Kubernetes deployment
-
-Designed to simulate a lightweight, production-style AI service with operational awareness.
-
-👨‍💻 Author
-
-Dhruv Patil
+**Dhruv Patil**  
 DevOps & Cloud Enthusiast
